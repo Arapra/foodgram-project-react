@@ -10,7 +10,8 @@ from users.serializers import NewUserSerializer
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
-        fields = '__all__'
+        fields = ('id', 'ingredients', 'tags', 'author', 'image', 'name',
+            'is_favorited', 'is_in_shopping_cart', 'text', 'cooking_time')
 
 
 class Base64ImageField(serializers.ImageField):
@@ -108,7 +109,7 @@ class RecipeCreateSerializer(serializers.ModelSerializer):
         for ingredient_data in ingredients_data:
             ingredient_id = ingredient_data['ingredient']['id']
             amount = ingredient_data['amount']
-            IngredientsRecipe.objects.create(
+            IngredientsRecipe.objects.bulk_create(
                 recipe=recipe, ingredient_id=ingredient_id, amount=amount)
         recipe.tags.set(tags_data)
         return recipe

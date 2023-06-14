@@ -26,7 +26,7 @@ class Tag(models.Model):
     )
 
     class Meta:
-        ordering = ['name']
+        ordering = ('name')
         verbose_name = 'Тэг'
         verbose_name_plural = 'Тэги'
 
@@ -100,6 +100,7 @@ class IngredientsRecipe(models.Model):
     )
     amount = models.IntegerField(
         validators=[MinValueValidator(1)],
+        validators=[MaxValueValidator(43200)]
     )
 
 
